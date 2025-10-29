@@ -51,7 +51,7 @@ pipeline {
         echo "Pipeline finished"
        }
        failure {
-        mail to: 'raghavman@gmail.com', subject: "Build failed: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL}"
+        mail to: 'yoyed38662@lovleo.com', subject: "Build failed: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL}"
        }
     }
   }
