@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+    
+    environment {
+        IMAGE_NAME = "raghav045/devops-portfolio-app"
+        TAG = "${env.BUILD_ID}"
+        DOCKER_CRED = "9b9abce4-d088-4349-b7e7-19c8c36625a9"
+        SSH_CRED = "ec2-ssh-key"
+    }
+    stages {
+        stage('Checkout') {
+           steps {
+             checkout scm
+            }
+        }
+        stage("Build Docker Image"){
+            steps{
+                sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+            }
+        }
+        stage('Trivy Scan') {
+           steps {
+              // install trivy in the agent or use container; here assuming trivy is installed
+              sh "trivy image --exit-code 1 --severity HIGH,CRITICAL ${IMAGE_NAME}:${TAG} || true"
+           }
+        }
+        stage('Login and Push'){
+           steps{
+               withCredentials([usernamePassword(credentialsId: "${DOCKER_CRED}", usernameVAR: "DockerUser", usernamePASS: "DockerPass")]){
+                   sh "echo \"$DockerPass\" | docker login -u \"$DockerUser\" --password-stdin "
+                   sh "docker push ${IMAGE_NAME}:${TAG}"
+               }
+           }
+        }
+        stage('Deploy to EC2') {
+          steps {
+            sshagent (credentials: ["${SSH_CRED}"]) {
+                sh """
+                 ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-149-254-204.us-east-2.compute.amazonaws.com'
+                 docker pull ${IMAGE_NAME}:${TAG} &&
+                 docker stop app || true &&
+                 docker rm app || true &&
+                 docker run -d --name app -p 80:5000 ${IMAGE_NAME}:${TAG}
+                '
+                """
+              }
+         }
+      }
+    post {
+       always {
+        echo "Pipeline finished"
+       }
+       failure {
+        mail to: 'raghavman@gmail.com', subject: "Build failed: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL}"
+       }
+    }
+  }
+}
