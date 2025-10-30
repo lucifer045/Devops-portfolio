@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "raghav045/devops-portfolio-app"
         TAG = "${env.BUILD_ID}"
-        DOCKER_CRED = "9b9abce4-d088-4349-b7e7-19c8c36625a9"
+        DOCKER_CRED = "docker-cred"
         SSH_CRED = "ec2-ssh-key"
     }
     stages {
