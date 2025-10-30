@@ -62,12 +62,7 @@ pipeline {
          echo "Pipeline finished"
          }
        failure {
-<<<<<<< HEAD
-        mail to: 'yoyed38662@lovleo.com', subject: "Build failed: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL}"
-       }
-=======
          echo "Pipleine failed"
          }
->>>>>>> 9ab29b2 (Updated Jenkins file)
     }
 }
