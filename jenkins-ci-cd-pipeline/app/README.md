@@ -109,9 +109,9 @@ Ensure Jenkins has **Pipeline** plugin installed.
 Feel free to fork the repo and raise PRs 👇
 https://github.com/lucifer045/Devops-portfolio
 
-👨‍💻 Author
-Prince Raghav
-Freelance DevOps & SRE Engineer
-Expert in: AWS | Jenkins | Kubernetes | Terraform | CI/CD | Docker | Observability
-LinkedIn: https://www.linkedin.com/in/prince-raghav
-GitHub: https://github.com/lucifer045
+---
+
+### 👨‍💻 Author
+**Prince Raghav** — Freelance DevOps & SRE Engineer  
+🔗 GitHub: https://github.com/lucifer045  
+🔗 LinkedIn: https://www.linkedin.com/in/prince-raghav
