@@ -19,7 +19,36 @@ The pipeline is triggered on every code update and ensures:
 
 ## 🧱 Architecture Diagram
 
-Developer → GitHub → Jenkins → Docker Build → Trivy Scan → Push to Docker Hub → SSH → Deploy on EC2
+           +-------------+
+           |   Developer |
+           +------+------+
+                  |
+                  v
+           +-------------+
+           |   GitHub    |
+           +------+------+
+                  |
+       Webhook / Poll SCM
+                  |
+                  v
+           +-------------+
+           |   Jenkins   |
+           +-------------+
+        Build | Test | Docker Build
+                  |
+                  v
+           +------------------+
+           |  Docker Hub Repo |
+           +------------------+
+                  |
+             SSH + Pull
+                  |
+                  v
+          +-------------------+
+          |   AWS EC2 Server  |
+          |  Run Docker App   |
+          +-------------------+
+
 
 
 ---
@@ -78,20 +107,38 @@ Ensure Jenkins has **Pipeline** plugin installed.
 
 ## 🏃 How to Run
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/lucifer045/Devops-portfolio.git
+Since the application is not hosted, you can deploy it yourself using your own EC2 instance.
 
-2. Open Jenkins → New Item → Select Pipeline
-3. Choose Pipeline from SCM
-4. Provide GitHub repo URL
-5. Save and Build Now
+1️⃣ Launch EC2 Instance
+Go to AWS → EC2 → Launch Instance
+Choose Amazon Linux 2
+Instance type: t2.micro (Free tier)
+Allow inbound:
+Port 22 → SSH
+Port 80 → HTTP
 
+2️⃣ Install Docker on EC2
 
-🌐 Application Access
-Once deployed, access the application using:
-http://<EC2-Public-IP>/
+sudo yum update -y
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
 
+3️⃣ Run the Application Container
+
+docker pull raghav045/devops-portfolio-app:latest
+
+docker run -d --name app -p 80:5000 raghav045/devops-portfolio-app:latest
+
+4️⃣ Access in Browser
+
+http://YOUR-EC2-PUBLIC-IP
+
+---
+
+💬 Want to Improve This Project?
+Feel free to fork the repo and raise PRs 👇
+https://github.com/lucifer045/Devops-portfolio
 
 👨‍💻 Author
 Prince Raghav
