@@ -1,3 +1,5 @@
-terraform-aws-infra/.terraform/
-*.tfstate
+terraform.tfstate.backup
+terraform.tfstate
 .terraform.lock.hcl
+.terraform.lock.hcl
+.terraform/
