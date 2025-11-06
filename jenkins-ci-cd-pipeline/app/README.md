@@ -105,50 +105,6 @@ Ensure Jenkins has **Pipeline** plugin installed.
 
 ---
 
-## 🏃 How to Run
-
-Since the application is not hosted, you can deploy it yourself using your own EC2 instance.
-
-1️⃣ Launch EC2 Instance
-Go to AWS → EC2 → Launch Instance
-Choose Amazon Linux 2
-Instance type: t2.micro (Free tier)
-Allow inbound:
-Port 22 → SSH
-Port 80 → HTTP
-
-2️⃣ Install Docker on EC2
-
-# Update system packages
-sudo yum update -y
-
-# Install Docker
-sudo amazon-linux-extras install docker -y
-
-# Start Docker service
-sudo service docker start
-
-# Add ec2-user to docker group (so docker can run without sudo)
-sudo usermod -aG docker ec2-user
-
-# Reconnect to apply permissions
-exit
-
-
-3️⃣ Run the Application Container
-
-# Pull Docker image
-docker pull raghav045/devops-portfolio-app:latest
-
-# Run Docker container
-docker run -d --name app -p 80:5000 raghav045/devops-portfolio-app:latest
-
-4️⃣ Access in Browser
-
-**http://<YOUR-EC2-PUBLIC-IP>**
-
----
-
 💬 Want to Improve This Project?
 Feel free to fork the repo and raise PRs 👇
 https://github.com/lucifer045/Devops-portfolio
