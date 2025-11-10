@@ -35,10 +35,11 @@ aws dynamodb create-table \
   --attribute-definitions AttributeName=LockID,AttributeType=S \
   --key-schema AttributeName=LockID,KeyType=HASH \
   --billing-mode PAY_PER_REQUEST
-
+```
 
 ### Step 2 - Update your backend.tf file
 
+```bash
 terraform {
   backend "s3" {
     bucket         = "my-terraform-backend-bucket"
@@ -48,29 +49,29 @@ terraform {
     encrypt        = true
   }
 }
-
+```
 🚀 Deployment Steps
 
 1️⃣ Initialize Terraform
-
+```bash
 terraform init
-
+```
 2️⃣ Validate and Plan
- 
+```bash
 terraform plan -var-file="env/dev/main.tfvars"
-
+```
 3️⃣ Apply Infrastructurre
-
+```bash
 terraform apply -var-file="env/dev/main.tfvars"
-
+```
 4️⃣ Destroy (when needed)
-
+```bash
 terraform destroy -var-file="env/dev/main.tfvars"
-
+```
 ⚠️ Before destroying, migrate your state back to local if you want to delete the S3 backend bucket:
-
+```bash
 terraform init -migrate-state -backend-config="path=terraform.tfstate"
-
+```
 
 📊 Outputs
 
