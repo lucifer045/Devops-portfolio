@@ -50,7 +50,7 @@ terraform {
   }
 }
 ```
-🚀 Deployment Steps
+### 🚀 Deployment Steps
 
 1️⃣ Initialize Terraform
 ```bash
@@ -73,7 +73,7 @@ terraform destroy -var-file="env/dev/main.tfvars"
 terraform init -migrate-state -backend-config="path=terraform.tfstate"
 ```
 
-📊 Outputs
+### 📊 Outputs
 
 Once deployed, Terraform will display key outputs like:
 
@@ -83,7 +83,7 @@ Once deployed, Terraform will display key outputs like:
 | `ec2_public_ip` | Public IP of EC2 instance |
 | `iam_role_arn`  | ARN of IAM role created   |
 
-🧩 Modules Overview
+### 🧩 Modules Overview
 
 | Module  | Description                                                 |
 | ------- | ----------------------------------------------------------- |
@@ -91,7 +91,7 @@ Once deployed, Terraform will display key outputs like:
 | **EC2** | Launches EC2 instance(s) with security groups and user data |
 | **IAM** | Creates IAM roles and attaches policies for EC2 access      |
 
-🧰 Useful Commands
+### 🧰 Useful Commands
 
 | Command                      | Description                  |
 | ---------------------------- | ---------------------------- |
@@ -101,7 +101,7 @@ Once deployed, Terraform will display key outputs like:
 | `terraform taint <resource>` | Mark resource for recreation |
 | `terraform output`           | Show all output variables    |
 
-🧱 Infrastructure Diagram
+### 🧱 Infrastructure Diagram
 
           +----------------------+
           |      AWS Cloud       |
@@ -116,4 +116,12 @@ Once deployed, Terraform will display key outputs like:
           +----------┼-------------+
                      │
               S3 Backend + DynamoDB Lock
-       
+              
+
+💬 Want to Improve This Project? Feel free to fork the repo and raise PRs 👇 https://github.com/lucifer045/Devops-portfolio
+
+👨‍💻 Author
+
+Prince Raghav — Freelance DevOps & SRE Engineer
+🔗 GitHub: https://github.com/lucifer045
+🔗 LinkedIn: https://www.linkedin.com/in/prince-raghav       
