@@ -118,10 +118,15 @@ Once deployed, Terraform will display key outputs like:
               S3 Backend + DynamoDB Lock
               
 
-💬 Want to Improve This Project? Feel free to fork the repo and raise PRs 👇 https://github.com/lucifer045/Devops-portfolio
 
-👨‍💻 Author
+💬 Want to Improve This Project?
+Feel free to fork the repo and raise PRs 👇
+https://github.com/lucifer045/Devops-portfolio
 
-Prince Raghav — Freelance DevOps & SRE Engineer
-🔗 GitHub: https://github.com/lucifer045
-🔗 LinkedIn: https://www.linkedin.com/in/prince-raghav       
+---
+
+### 👨‍💻 Author
+**Prince Raghav** — Freelance DevOps & SRE Engineer  
+🔗 GitHub: https://github.com/lucifer045  
+🔗 LinkedIn: https://www.linkedin.com/in/prince-raghav
+    
