@@ -10,28 +10,6 @@ Designed for **multi-environment deployments** (`dev`, `stage`, `prod`) followin
 
 ---
 
-## 🗂️ Project Structure
-
-terraform-aws-infra/
-├── main.tf # Root module entry point
-├── variables.tf # Input variable definitions
-├── outputs.tf # Global output values
-├── provider.tf # AWS provider configuration
-├── backend.tf # Remote backend (S3 + DynamoDB)
-├── user-data.sh # EC2 bootstrap script
-│
-├── modules/
-│ ├── vpc/ # VPC module (VPC, Subnets, IGW, Route Tables)
-│ ├── ec2/ # EC2 module (Instances, SGs)
-│ └── iam/ # IAM module (Roles, Instance Profiles)
-│
-└── env/
-└── dev/
-└── main.tfvars # Environment-specific variables
-
-
----
-
 ## ⚙️ Prerequisites
 
 Before you begin, ensure the following:
@@ -57,6 +35,7 @@ aws dynamodb create-table \
   --attribute-definitions AttributeName=LockID,AttributeType=S \
   --key-schema AttributeName=LockID,KeyType=HASH \
   --billing-mode PAY_PER_REQUEST
+```bash
 
 ### Step 2 - Update your backend.tf file
 
@@ -70,28 +49,16 @@ terraform {
   }
 }
 
-```bash
-terraform {
-  backend "s3" {
-    bucket         = "my-terraform-backend-bucket"
-    key            = "env/dev/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
-
-
 🚀 Deployment Steps
 
 1️⃣ Initialize Terraform
 ```bash
 terraform init
-
+```bash
 2️⃣ Validate and Plan
 ```bash 
 terraform plan -var-file="env/dev/main.tfvars"
-
+```bash
 3️⃣ Apply Infrastructurre
 ```bash
 terraform apply -var-file="env/dev/main.tfvars"
