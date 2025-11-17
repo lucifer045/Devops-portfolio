@@ -1,3 +1,13 @@
+data "aws_ami" "amazon_linux" {
+    most_recent = true
+    owners = ["amazon"]
+
+    filter {
+      name = "name"
+      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    }
+}
+
 resource "aws_iam_role" "cluster_role" {
   name = "${var.cluster_name}-cluster-role"
   assume_role_policy = jsonencode({
@@ -38,14 +48,7 @@ resource "aws_eks_cluster" "example" {
     endpoint_private_access = true
     endpoint_public_access  = true
 
-
-    ##Come and redined this
-
-    subnet_ids = [
-      aws_subnet.az1.id,
-      aws_subnet.az2.id,
-      aws_subnet.az3.id,
-    ]
+    subnet_ids = var.private_subnet
   }
 }
 
@@ -79,7 +82,7 @@ resource "aws_eks_node_group" "example" {
   cluster_name    = aws_eks_cluster.example.name
   node_group_name = "${var.cluster_name}-node-groups"
   node_role_arn   = aws_iam_role.node_role.arn
-  subnet_ids      = aws_subnet.example[*].id #come and check this later
+  subnet_ids      = var.private_subnet
 
   scaling_config {
     desired_size = 1
@@ -90,11 +93,11 @@ resource "aws_eks_node_group" "example" {
   update_config {
     max_unavailable = 1
   }
-  instance_types = "" #UPDATE THIS
-  ami_type = "" #UPDATE THIS
+  instance_types = var.instance_type
+  ami_type = var.ami_id != "" ? var.ami_id : data.aws_ami.amazon_linux.id 
 
   tags = {
-    Name = "$" #Update Tag
+    Name = "${var.env}-app"
   }
 
   depends_on = [aws_eks_cluster.example]
